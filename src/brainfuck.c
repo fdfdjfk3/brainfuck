@@ -14,7 +14,6 @@ int main(int argc, char **argv) {
 
   char current = fgetc(contents);
   size_t pos = 0;
-  int loops = 0;
 
   // You can have a maximum of 100 nested loops
   size_t stack[100] = {0};
@@ -27,8 +26,11 @@ int main(int argc, char **argv) {
         pos = 0;
       break;
     case '<':
-      if (--pos < 0)
+      if (pos == 0) {
         pos = max_index;
+      } else {
+        --pos;
+      }
       break;
     case '+':
       ++mem[pos];
@@ -39,7 +41,7 @@ int main(int argc, char **argv) {
     case '[':
       if (!mem[pos]) {
         if (stack_size > 0) {
-          if (stack[stack_size - 1] == ftell(contents)) {
+          if (stack[stack_size - 1] == (size_t)ftell(contents)) {
             --stack_size;
           }
         }
