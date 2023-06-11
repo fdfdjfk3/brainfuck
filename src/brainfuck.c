@@ -1,4 +1,3 @@
-#include <inttypes.h>
 #include <stdio.h>
 
 int main(int argc, char **argv) {
@@ -8,6 +7,11 @@ int main(int argc, char **argv) {
   }
 
   FILE *contents = fopen(argv[1], "r");
+  if (!contents) {
+    fprintf(stderr, "couldn't open file path '%s'. are you sure it exists?\n",
+            argv[1]);
+    return 1;
+  }
 
   char mem[30000] = {0};
   const size_t max_index = sizeof(mem) - 1;
